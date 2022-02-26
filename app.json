@@ -19,7 +19,10 @@
     "ios": {
       "bundleIdentifier": "com.mycoda",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to send images in chat."
+      }
     },
     "android": {
       "googleServicesFile": "./google-services.json",

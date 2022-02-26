@@ -11,7 +11,7 @@ export default function PharmacyLogin() {
 
 	const navigation = useNavigation();
 	
-	const [pIva, setpIva] = useState('');
+	const [piva, setpIva] = useState('');
 	const [password, setPassword] = useState('');
 	const { signIn } = useContext(AuthContext);
 
@@ -20,7 +20,7 @@ export default function PharmacyLogin() {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					piva: pIva,
+					piva: piva,
 					password: password,
 				})
 			})
@@ -32,7 +32,7 @@ export default function PharmacyLogin() {
 				}
 				localUserData.save({
 					email: json.email,
-					id: json.pIva,
+					id: json.piva,
 					businessName: json.ragSociale,
 					address: json.indirizzo,
 					telephone: json.numTel,

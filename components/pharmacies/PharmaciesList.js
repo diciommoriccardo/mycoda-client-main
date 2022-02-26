@@ -43,14 +43,14 @@ export default class Pharmacies extends Component {
     return (
       <FlatList
         data={this.state.pharmacies}
-        keyExtractor={item => item.pIva}
+        keyExtractor={item => item.piva}
         onRefresh={this.fetchPharmacies}
         refreshing={this.state.refreshing}
         renderItem={({ item }) => (
           <PharmacyItem
-            key={item.pIva}
+            key={item.piva}
             navigation={this.props.navigation}
-            userId={item.pIva}
+            userId={item.piva}
             name={item.ragSociale}
             address={item.indirizzo}
             imgUri="https://reactnative.dev/img/tiny_logo.png" />

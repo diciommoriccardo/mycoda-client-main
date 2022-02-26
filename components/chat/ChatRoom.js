@@ -8,6 +8,7 @@ import { SocketContext } from '../SocketContext';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
+
 export default function ChatRoom({ route }) {
 
   const { userId, localUser } = route.params;
@@ -72,6 +73,9 @@ export default function ChatRoom({ route }) {
   };
 
   const fetchMessages = async (offset, limit) => {
+
+    console.log(userId)
+
     return fetch(`${API.URL}/api/messages/${userId}?offset=${offset}&limit=${limit}`, {
       method: 'GET',
       headers: {
@@ -148,7 +152,7 @@ export default function ChatRoom({ route }) {
     navigation.navigate('paypal-web-modal', { uri: url });
   };
 
-  const onCameraAction = () => {
+  const onCameraAction = async () => {
     ImagePicker.launchCameraAsync()
       .then(({ cancelled, uri }) => {
         if (cancelled) return;
