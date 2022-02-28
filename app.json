@@ -3,6 +3,14 @@
     "name": "MyCoda",
     "slug": "MyCoda",
     "version": "1.0.0",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png"
+        }
+      ]
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

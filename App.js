@@ -15,12 +15,21 @@ import localUserData from './helpers/localUserData';
 import AuthContext from './components/AuthContext';
 import SendPayment from './components/payments/SendPayment';
 import WebModal from './components/WebModal';
-import { registerForPushNotificationsAsync } from './components/notification';
 import * as Notifications from 'expo-notifications';
+
 
 enableScreens();
 const Stack = createNativeStackNavigator();
-
+export function requestPermissionsAsync() {
+  return Notifications.requestPermissionsAsync({
+    ios: {
+      allowAlert: true,
+      allowBadge: true,
+      allowSound: true,
+      allowAnnouncements: true,
+    },
+  });
+}
 export default class App extends Component {
 
   constructor(props) {
@@ -43,9 +52,11 @@ export default class App extends Component {
       .then(data => {
         this.setState({ loading: false, isSignedIn: !!data?.accessToken, localUser: data });
         this.registerDefaultChannel();
-        registerForPushNotificationsAsync(data.accessToken)
+        requestPermissionsAsync()
+        registerForPushNotificationsAsync()
           .then((res) => res.json())
           .then((json) => console.log(json))
+          
         Notifications.addNotificationReceivedListener(notification => {
           console.log(notification);
         });
@@ -101,6 +112,47 @@ export default class App extends Component {
       </SafeAreaView>
     );
   }
+}
+
+
+async function pushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "MyCoda",
+      body: 'Here is the notification body',
+      data: { data: 'goes here' },
+    }
+  });
+}
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
 }
 
 const styles = StyleSheet.create({
