@@ -39,7 +39,8 @@
     "react-native-unimodules": "~0.15.0",
     "react-native-web": "0.17.1",
     "react-native-webview": "11.13.0",
-    "socket.io-client": "^4.1.2"
+    "socket.io-client": "^4.1.2",
+    "expo-permissions": "~13.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
