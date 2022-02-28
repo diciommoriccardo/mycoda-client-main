@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, View, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import { GiftedChat, Actions, Bubble } from 'react-native-gifted-chat';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import 'dayjs/locale/it';
@@ -7,6 +7,7 @@ import { API } from '../../config/config';
 import { SocketContext } from '../SocketContext';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'expo-camera';
 
 
 export default function ChatRoom({ route }) {
@@ -18,7 +19,7 @@ export default function ChatRoom({ route }) {
 
   const navigation = useNavigation();
   const { colors } = useTheme();
-
+  
   const [messages, setMessages] = useState([]);
   const [messagesOffset, setMessagesOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,8 @@ export default function ChatRoom({ route }) {
 
   const messagesRef = useRef();
   messagesRef.current = messages;
+
+  
 
   useEffect(() => loadMessages(), []);
 
@@ -153,6 +156,13 @@ export default function ChatRoom({ route }) {
   };
 
   const onCameraAction = async () => {
+    if(!Camera.getCameraPermissionsAsync()){
+      if(!Camera.requestCameraPermissionsAsync()){
+        Alert.alert("Impossibile utilizzare la fotocamera", "Concedi i permessi alla fotocamera.");
+        return;
+      }
+    }
+    Camera.requestCameraPermissionsAsync();
     ImagePicker.launchCameraAsync()
       .then(({ cancelled, uri }) => {
         if (cancelled) return;
