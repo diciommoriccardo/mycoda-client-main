@@ -39,29 +39,7 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-export function notify() {
-  const [setExpoPushToken] = useState('');
-  const [setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-}
 export default class App extends Component {
 
   constructor(props) {
@@ -85,12 +63,7 @@ export default class App extends Component {
         this.setState({ loading: false, isSignedIn: !!data?.accessToken, localUser: data });
         this.registerDefaultChannel();
         requestPermissionsAsync()
-        //notify()
-        registerForPushNotificationsAsync(data.accessToken)
-          .then((res) => res.json())
-          .then((json) => console.log(json))
         Notifications.addNotificationReceivedListener(notification => {
-          pushNotification(notification)
           console.log(notification);
         });
         return SplashScreen.hideAsync()
@@ -146,15 +119,7 @@ export default class App extends Component {
     );
   }
 }
-async function pushNotification(notification) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: notification.data.sender,
-      body: notification.body
-      //data: { data: 'goes here' },
-    }
-  });
-}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
