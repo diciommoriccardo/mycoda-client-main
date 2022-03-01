@@ -6,6 +6,8 @@ import { API } from '../../config/config';
 import localUserData from '../../helpers/localUserData';
 import AuthContext from '../AuthContext';
 import headerLogo from '../../assets/header.png';
+import { registerForPushNotificationsAsync } from '../notification';
+
 
 export default function PharmacyLogin() {
 
@@ -40,7 +42,11 @@ export default function PharmacyLogin() {
 				}, {
 					accessToken: json.accessToken,
 					refreshToken: json.refreshToken,
-				}).then(data => signIn(data))
+				}).then(data => {
+					registerForPushNotificationsAsync(data.accessToken)
+					signIn(data)
+				})
+				
 			})
 			.catch((error) => console.error(error))
 	}
