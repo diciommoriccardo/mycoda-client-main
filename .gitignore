@@ -72,3 +72,5 @@ web-build/
 
 # @end expo-cli
 .vscode/settings.json
+package-lock.json
+.gitignore
