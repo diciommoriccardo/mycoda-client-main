@@ -6,8 +6,6 @@ import { API } from '../../config/config';
 import localUserData from '../../helpers/localUserData';
 import AuthContext from '../AuthContext';
 import headerLogo from '../../assets/header.png';
-import { registerForPushNotificationsAsync } from '../notification';
-
 
 export default function PharmacyLogin() {
 
@@ -42,10 +40,7 @@ export default function PharmacyLogin() {
 				}, {
 					accessToken: json.accessToken,
 					refreshToken: json.refreshToken,
-				}).then(data => {
-					registerForPushNotificationsAsync(data.accessToken)
-					signIn(data)
-				})
+				}).then(data => signIn(data))
 				
 			})
 			.catch((error) => console.error(error))
@@ -58,7 +53,7 @@ export default function PharmacyLogin() {
 					<Image source={headerLogo} resizeMode={'contain'} style={{ width: 250, height: 250 }} />
 				</View>
 				<Text grey20 text30 marginB-30>Farmacie</Text>
-				<Text primaryColor text60 marginB-10 primaryColor>Partita IVA</Text>
+				<Text primaryColor text60 marginB-10>Partita IVA</Text>
 				<TextField text70 dark10
 					placeholder="Partita iva della farmacia"
 					onChangeText={text => setpIva(text)}
@@ -73,7 +68,7 @@ export default function PharmacyLogin() {
 						label="Accedi"
 						onPress={login}
 					/>
-					<View flex row bottom marginT-30 flex centerH>
+					<View flex row bottom marginT-30 centerH>
 						<Text grey10 text70 centerV>Non hai una farmacia? </Text>
 						<Button link text70 primaryColor
 							label="Accedi"

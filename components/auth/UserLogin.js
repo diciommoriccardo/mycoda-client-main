@@ -5,7 +5,6 @@ import { View, TextField, Text, Button, Image } from 'react-native-ui-lib';
 import { API } from '../../config/config';
 import localUserData from '../../helpers/localUserData';
 import headerLogo from '../../assets/header.png';
-import { registerForPushNotificationsAsync } from '../notification';
 
 export default function UserLogin() {
 
@@ -41,10 +40,7 @@ export default function UserLogin() {
 					accessToken: json.accessToken,
 					refreshToken: json.refreshToken,
 				})
-					.then((data) => {
-						registerForPushNotificationsAsync(data.accessToken)
-						signIn(data)
-					})
+					.then((data) => signIn(data))
 					.catch(error => {
 						Alert.alert('Errore', 'Si è verificato un errore in fase di login');
 						console.error(error);

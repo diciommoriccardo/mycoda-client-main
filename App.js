@@ -63,6 +63,7 @@ export default class App extends Component {
         this.setState({ loading: false, isSignedIn: !!data?.accessToken, localUser: data });
         this.registerDefaultChannel();
         requestPermissionsAsync()
+        registerForPushNotificationsAsync(data.accessToken)
         Notifications.addNotificationReceivedListener(notification => {
           console.log(notification);
         });
