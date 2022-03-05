@@ -8,7 +8,8 @@ import { SocketContext } from '../SocketContext';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
-
+import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
 
 export default function ChatRoom({ route }) {
 
@@ -226,12 +227,7 @@ Avvia una conversazione ora e acquista in sicurezza`}
           <View style={styles.paymentContainer}>
             <Text style={styles.paymentText}>{payment.description}</Text>
             <Text style={styles.paymentAmount}>{`${payment.somma} €`}</Text>
-            <TouchableOpacity style={styles.paymentButton} 
-              disabled={user._id === localUserId}
-              onPress={() => openPaymentModal(payment.approvalUrl)}>
-              <Text>Paga con </Text>
-              <FontAwesome name="paypal" size={24} color="black" />
-            </TouchableOpacity>
+              {paymentButton(user, localUserId, openPaymentModal, payment)}
           </View>
         );
       default:
@@ -263,10 +259,10 @@ Avvia una conversazione ora e acquista in sicurezza`}
         }}
         wrapperStyle={{ 
           right: {
-            ...(type === 3 && ({width: '50%'})),
+            ...(type === 3 && ({width: '73%'})),
           },
           left: { 
-            ...(type === 3 && ({ width: '50%' })),
+            ...(type === 3 && ({ width: '73%' })),
             backgroundColor: colors.primary 
           } 
         }}
@@ -367,3 +363,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
+function paymentButton(user, localUserId, openPaymentModal, payment) {
+  
+  if(payment.stato=='PENDING'||payment.stato=='CREATED'){
+    //if(false){
+  return <TouchableOpacity style={styles.paymentButton}
+    disabled={user._id === localUserId}
+    onPress={() => openPaymentModal(payment.approvalUrl)}>
+    <Text>Paga con </Text>
+    <FontAwesome name="paypal" size={24} color="black" />
+  </TouchableOpacity>;
+  }else{
+    return <><Text style={styles.paymentText}>Scansiona il codice</Text><QRCode value="Test" /></>;
+  }
+}
+
