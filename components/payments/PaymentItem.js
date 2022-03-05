@@ -5,7 +5,9 @@ import { View, Text, Image } from 'react-native-ui-lib';
 
 export default function PaymentItem({
   imgUri,
-  name,
+  //name,
+  desc,
+  somma
 }) {
   return (
     <View style={styles.container}>
@@ -17,16 +19,16 @@ export default function PaymentItem({
       />
       <View flex row paddingL-10>
         <View flex spread>
-          <View flex spread top>
+          {/* <View flex spread top>
             <Text grey10 text65>{name}</Text>
-          </View>
+          </View> */}
           <View flex row bottom>
             <MaterialCommunityIcons name="cart" size={18} color="red" />
-            <Text numberOfLines={1} ellipsizeMode='tail' grey20 text80 style={styles.text}>{"Compresse speciali ultra lunghe magiche"}</Text>
+            <Text numberOfLines={1} ellipsizeMode='tail' grey20 text80 style={styles.text}>{desc}</Text>
           </View>
         </View>
         <View flex row right centerV>
-          <Text numberOfLines={1} grey20 text70 style={styles.text}>{"€ 3.50"}</Text>
+          <Text numberOfLines={1} grey20 text70 style={styles.text}>{somma}</Text>
         </View>
       </View>
     </View>
