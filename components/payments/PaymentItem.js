@@ -19,16 +19,16 @@ export default function PaymentItem({
       />
       <View flex row paddingL-10>
         <View flex spread>
-          {/* <View flex spread top>
-            <Text grey10 text65>{name}</Text>
-          </View> */}
+          <View flex spread top>
+            <Text grey10 text65>{desc}</Text>
+          </View>
           <View flex row bottom>
             <MaterialCommunityIcons name="cart" size={18} color="red" />
-            <Text numberOfLines={1} ellipsizeMode='tail' grey20 text80 style={styles.text}>{desc}</Text>
+            <Text numberOfLines={1} ellipsizeMode='tail' grey20 text80 style={styles.text}>{somma}</Text>
           </View>
         </View>
         <View flex row right centerV>
-          <Text numberOfLines={1} grey20 text70 style={styles.text}>{somma}</Text>
+          <Text numberOfLines={1} grey20 text70 style={styles.text}>{`${somma} €`}</Text>
         </View>
       </View>
     </View>
