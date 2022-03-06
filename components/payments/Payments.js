@@ -1,8 +1,11 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import { FlatList, StyleSheet, View, Text } from 'react-native';
 import PaymentItem from './PaymentItem';
+import { useNavigation } from '@react-navigation/native';
+import { API } from '../../config/config';
 
-export default function Payments() {
+
+export default function Payments({ route }) {
   const navigation = useNavigation();
 
   const { localUser } = route.params;
@@ -12,7 +15,7 @@ export default function Payments() {
   const paymentsRef = useRef(payments);
   const setPayments = payments => {
     paymentsRef.current = payments;
-    _setSessions(payments);
+    _setPayments(payments);
   }
 
   const [refreshing, setRefreshing] = useState(false);
@@ -30,6 +33,7 @@ export default function Payments() {
     })
     .then(response => response.json())
     .then(json => {
+      console.log(json)
       if ('error' in json) throw new Error(json.error.message);
       setPayments(json);
       setRefreshing(false);
