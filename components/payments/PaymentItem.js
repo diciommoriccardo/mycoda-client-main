@@ -1,15 +1,28 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableHighlight } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, Image } from 'react-native-ui-lib';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function PaymentItem({
+  id,
   imgUri,
-  //name,
   desc,
   somma
 }) {
+
+  const navigation = useNavigation();
+
+  const onPress = () => {
+		navigation.navigate('payment-detail', { id });
+	}
+
+
   return (
+    <TouchableHighlight
+			onPress={onPress} 
+			underlayColor="white">
     <View style={styles.container}>
       <Image
         style={styles.logo}
@@ -32,6 +45,7 @@ export default function PaymentItem({
         </View>
       </View>
     </View>
+    </TouchableHighlight>
   );
 }
 
