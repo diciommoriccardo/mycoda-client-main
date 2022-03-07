@@ -68,7 +68,8 @@ export default function Payments({ route }) {
       ListEmptyComponent={renderListEmpty}
       renderItem={({ item }) => (
         <PaymentItem
-          // key={item.userId}
+        key={item.id}
+          id={item.id}
           // userId={item.userId}
           // name={item.displayName}
           desc={item.desc}
