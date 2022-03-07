@@ -68,10 +68,10 @@ export default function Payments({ route }) {
       ListEmptyComponent={renderListEmpty}
       renderItem={({ item }) => (
         <PaymentItem
-        key={item.id}
+          key={item.id}
           id={item.id}
-          // userId={item.userId}
-          // name={item.displayName}
+          storageKey={item.storageKey}
+          stato={item.stato}
           desc={item.desc}
           somma={item.somma}
           imgUri="https://reactnative.dev/img/tiny_logo.png"
