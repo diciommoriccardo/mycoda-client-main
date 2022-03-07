@@ -17,6 +17,7 @@ import SendPayment from './components/payments/SendPayment';
 import WebModal from './components/WebModal';
 import { registerForPushNotificationsAsync } from './components/notification';
 import * as Notifications from 'expo-notifications';
+import PaymentDetail from './components/payments/PaymentDetail';
 
 
 enableScreens();
@@ -106,6 +107,10 @@ export default class App extends Component {
                     <Stack.Screen name="send-payment" component={SendPayment}
                       initialParams={{ localUser: this.state.localUser }}
                       options={{ headerTitle: "Invia pagamento" }}
+                    />
+                    <Stack.Screen name="payment-detail" component={PaymentDetail}
+                      initialParams={{ localUser: this.state.localUser }}
+                      options={{ headerTitle: "Dettaglio pagamento" }}
                     />
                     <Stack.Screen name="paypal-web-modal" component={WebModal}
                       options={{ presentation: 'modal', headerTitle: 'Pagamento' }}
