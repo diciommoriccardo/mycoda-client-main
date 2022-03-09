@@ -2,12 +2,30 @@ import * as React from 'react';
 import { Text, View, StyleSheet,Image } from 'react-native';
 import Constants from 'expo-constants';
 import { Card } from 'react-native-paper';
+import { API } from '../../config/config';
+
 
 
 export default function PaymentDetail({ route }){
 
-    const { localUser } = route.params;
+    const localUser = route.params.localUser;
     const { accessToken, type: loginType } = localUser;
+
+    const cfUtente = route.params.cfUtente;
+    const pivaFarma = route.params.pivaFarma;
+
+    var endpoint = (loginType == 'pharmacy') ? `${API.URL}/api/users/${cfUtente}` : `${API.URL}/api/pharmacies/${pivaFarma}`
+    fetch(endpoint, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+    })
+    .then(response => response.json())
+    .then(data => data)
+    .catch(err => console.log(err))
+
 
     return (
         <View style={styles.container}>
