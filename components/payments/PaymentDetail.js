@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet,Image } from 'react-native';
 import Constants from 'expo-constants';
 import { Card } from 'react-native-paper';
@@ -14,28 +14,31 @@ export default function PaymentDetail({ route }){
     const cfUtente = route.params.cfUtente;
     const pivaFarma = route.params.pivaFarma;
 
+    const [details, setDetails] = useState('')
+    
     var endpoint = (loginType == 'pharmacy') ? `${API.URL}/api/users/${cfUtente}` : `${API.URL}/api/pharmacies/${pivaFarma}`
     fetch(endpoint, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
         },
     })
     .then(response => response.json())
-    .then(data => data)
+    .then(data => {
+        setDetails(data)
+    })
     .catch(err => console.log(err))
-
 
     return (
         <View style={styles.container}>
       <View>
-        <Text style={styles.orderTitle}>Ordine N.</Text>
+        <Text style={styles.orderTitle}>Ordine N. {route.params.id}</Text>
         <View><Text style={styles.prodottoLoremIpsum}>Prodotto: </Text>
-        <Text style={styles.descrizione}>Tachipirina </Text></View>
+        <Text style={styles.descrizione}>{route.params.desc}</Text></View>
         <View>
         <Text style={styles.farmaciaLoremIpsum}>Acquistato da: </Text>
-        <Text style={styles.descrizione}>Farmacia Pomarico </Text>
+        <Text style={styles.descrizione}>{details.nome}</Text>
         </View>
         <View>
         <Text style={styles.prodottoLoremIpsum2}>
