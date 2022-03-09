@@ -59,7 +59,7 @@ export default function Payments({ route }) {
 
   return (
     <FlatList
-      data={payments}
+      data={payments.reverse()}
       onRefresh={fetchPayments}
       refreshing={refreshing}
       keyExtractor={item => item.id}
