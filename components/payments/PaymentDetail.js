@@ -5,6 +5,10 @@ import { Card } from 'react-native-paper';
 
 
 export default function PaymentDetail({ route }){
+
+    const { localUser } = route.params;
+    const { accessToken, type: loginType } = localUser;
+
     return (
         <View style={styles.container}>
       <View>

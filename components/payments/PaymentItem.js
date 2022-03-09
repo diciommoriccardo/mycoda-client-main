@@ -12,13 +12,15 @@ export default function PaymentItem({
   somma,
   time,
   stato, 
-  storageKey
+  storageKey,
+  cfUtente,
+  pivaFarma
 }) {
 
   const navigation = useNavigation();
 
   const onPress = () => {
-		navigation.navigate('payment-detail', { id, desc, somma, time, stato, storageKey });
+		navigation.navigate('payment-detail', { id, desc, somma, time, stato, storageKey, cfUtente, pivaFarma });
 	}
 
 
