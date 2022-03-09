@@ -74,6 +74,8 @@ export default function Payments({ route }) {
           stato={item.stato}
           desc={item.desc}
           somma={item.somma}
+          cfUtente={item.cfUtente}
+          pivaFarma={item.pivaFarma}
           imgUri="https://reactnative.dev/img/tiny_logo.png"
           time={item.time}/>
       )} />
