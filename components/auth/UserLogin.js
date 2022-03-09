@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Alert, ScrollView, Linking } from 'react-native';
+import { Alert, ScrollView, Linking, SafeAreaView} from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { View, TextField, Text, Button, Image } from 'react-native-ui-lib';
 import { API } from '../../config/config';
 import localUserData from '../../helpers/localUserData';
 import headerLogo from '../../assets/header.png';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function UserLogin() {
 
@@ -51,6 +52,11 @@ export default function UserLogin() {
 	}
 
 	return (
+		<SafeAreaView
+        style={{
+            flex:1
+            }}>
+        <KeyboardAwareScrollView>
 		<ScrollView>
 			<View flex paddingH-30>
 				<View flex center >
@@ -61,11 +67,17 @@ export default function UserLogin() {
 				<TextField text70 dark10
 					placeholder="Il tuo codice fiscale"
 					onChangeText={text => setFiscalCode(text)}
+					returnKeyType="next"
+                    onSubmitEditing={() => {
+                        this.secondTextInput.focus();
+                    }}
 				/>
 				<Text primaryColor text60 marginB-10>Password</Text>
 				<TextField text70 secureTextEntry dark10
 					placeholder="Password"
 					onChangeText={text => setPassword(text)}
+					ref={(input) => { this.secondTextInput = input; }}
+                    returnKeyType="done"
 				/>
 				<View flex top>
 					<Button text70 white background-primaryColor borderRadius={10} marginT-10
@@ -95,6 +107,8 @@ export default function UserLogin() {
 				</View>
 			</View>
 		</ScrollView>
+		</KeyboardAwareScrollView>
+        </SafeAreaView>
 	);
 }
 
