@@ -3,8 +3,8 @@ import { Text, View, StyleSheet,Image } from 'react-native';
 import Constants from 'expo-constants';
 import { Card } from 'react-native-paper';
 import { API } from '../../config/config';
-
-
+import moment from 'moment';
+import QRCode from "react-qr-code";
 
 export default function PaymentDetail({ route }){
 
@@ -29,7 +29,7 @@ export default function PaymentDetail({ route }){
         setDetails(data)
     })
     .catch(err => console.log(err))
-
+    
     return (
         <View style={styles.container}>
       <View>
@@ -38,26 +38,37 @@ export default function PaymentDetail({ route }){
         <Text style={styles.descrizione}>{route.params.desc}</Text></View>
         <View>
         <Text style={styles.farmaciaLoremIpsum}>Acquistato da: </Text>
-        <Text style={styles.descrizione}>{details.nome}</Text>
+        <Text style={styles.descrizione}>{((loginType=='pharmacy') ? details.nome+" "+ details.cognome : details.ragSociale)}</Text>
         </View>
         <View>
         <Text style={styles.prodottoLoremIpsum2}>
-          Data Acquisto: LoremIpsum
+          Data Acquisto: 
         </Text>
-        <Text style={styles.descrizione}>24/02/2022 - 17:33 </Text></View>
+        <Text style={styles.descrizione}>{ moment(route.params.time).format("DD/MM/YYYY - HH:mm ")} </Text></View>
+        <View>
+        <Text style={styles.prodottoLoremIpsum2}>
+          Stato pagamento: 
+        </Text>
+        <Text style={styles.descrizione}>{ ((route.params.stato=='COMPLETED') ? "Pagato" : "Da Pagare" )} </Text></View>
       </View>
+      
       <View style={styles.totaleRow}>
         <Text style={styles.totale}>Totale:</Text>
-        <Text style={styles.totale2}>€120,00</Text>
+        <Text style={styles.totale2}>€{route.params.somma}</Text>
       </View>
-      <Text style={styles.paragraph}> Scansiona il codice QR per ritirare il prodotto</Text>
-      <Card>
-      <View style={styles.QR}>
-        <Image style={styles.imageqr} source={require('../../assets/icon.png')} />
-      </View>
-      </Card>
+      {qrCode()}
     </View>
       );
+      
+  function qrCode() {
+    if(route.params.stato=='COMPLETED'){
+    return <><Text style={styles.paragraph}> Scansiona il codice QR per ritirare il prodotto</Text><Card>
+      <View style={styles.QR}>
+        <QRCode value={route.params.storageKey} />
+      </View>
+    </Card></>;
+    }
+  }
 }
 const styles = StyleSheet.create({
     container: {
@@ -140,4 +151,6 @@ const styles = StyleSheet.create({
   },
     });
  
+
+
 
