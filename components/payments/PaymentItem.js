@@ -3,6 +3,7 @@ import { StyleSheet, TouchableHighlight } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, Image } from 'react-native-ui-lib';
 import { useNavigation } from '@react-navigation/native';
+import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 export default function PaymentItem({
@@ -41,8 +42,10 @@ export default function PaymentItem({
             <Text grey10 text65>{desc}</Text>
           </View>
           <View flex row bottom>
-            <MaterialCommunityIcons name="cart" size={18} color="red" />
-            <Text numberOfLines={1} ellipsizeMode='tail' grey20 text80 style={styles.text}>{somma}</Text>
+            <MaterialCommunityIcons name="cart" size={18} 
+            {...(stato === 'COMPLETED' && ({ color: 'green' }))}
+            {...(stato != 'COMPLETED' && ({ color: 'red' }))} />
+            <Text numberOfLines={1} ellipsizeMode='tail' grey20 text80 style={styles.text}>{desc}</Text>
           </View>
         </View>
         <View flex row right centerV>
