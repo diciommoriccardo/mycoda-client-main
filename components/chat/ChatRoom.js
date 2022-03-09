@@ -365,16 +365,15 @@ const styles = StyleSheet.create({
 });
 function paymentButton(user, localUserId, openPaymentModal, payment) {
   
-  if(payment.stato=='PENDING'||payment.stato=='CREATED'||payment.stato==undefined){
-  return <TouchableOpacity style={styles.paymentButton}
+  if(payment.stato=='COMPLETED'){
+    return <><Text style={styles.paymentText}>Scansiona il codice</Text><QRCode value={payment.storageKey} /></>;
+  }else{
+    return <TouchableOpacity style={styles.paymentButton}
     disabled={user._id === localUserId}
     onPress={() => openPaymentModal(payment.approvalUrl)}>
     <Text>Paga con </Text>
     <FontAwesome name="paypal" size={24} color="black" />
   </TouchableOpacity>;
-  }else{
-    console.log("Sono QUI:)", payment.stato);
-    return <><Text style={styles.paymentText}>Scansiona il codice</Text><QRCode value={payment.storageKey} /></>;
   }
 }
 
