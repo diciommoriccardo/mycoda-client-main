@@ -9,13 +9,16 @@ export default function PaymentItem({
   id,
   imgUri,
   desc,
-  somma
+  somma,
+  time,
+  stato, 
+  storageKey
 }) {
 
   const navigation = useNavigation();
 
   const onPress = () => {
-		navigation.navigate('payment-detail', { id });
+		navigation.navigate('payment-detail', { id, desc, somma, time, stato, storageKey });
 	}
 
 
