@@ -47,7 +47,7 @@ export default function SendPayment({route}) {
       <View flex paddingH-30 paddingV-30>
         <Text primaryColor text65>Importo</Text>
         <TextField text70 placeholder="Importo pagamento" dark10 keyboardType={"decimal-pad"}
-          onChangeText={text => setAmount(text)} />
+          onChangeText={text => setAmount(text.replace(/,/g, '.'))} />
         <Text primaryColor text65>Descrizione</Text>
         <TextField text70 placeholder="Breve descrizione del pagamento" dark10
           onChangeText={text => setDescription(text)} />
