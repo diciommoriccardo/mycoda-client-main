@@ -33,6 +33,7 @@
       }
     },
     "android": {
+      "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
       "package": "com.mycoda",
       "versionCode": 1,
