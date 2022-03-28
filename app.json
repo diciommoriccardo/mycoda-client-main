@@ -7,7 +7,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icon.png"
+          "icon": "./assets/notifications-icon.png"
         }
       ]
     ],
