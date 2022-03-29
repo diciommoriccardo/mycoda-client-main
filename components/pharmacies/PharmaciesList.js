@@ -53,7 +53,7 @@ export default class Pharmacies extends Component {
             userId={item.piva}
             name={item.ragSociale}
             address={item.indirizzo}
-            imgUri="https://reactnative.dev/img/tiny_logo.png" />
+            imgUri={item.propic}/>
         )} />
     );
   }
