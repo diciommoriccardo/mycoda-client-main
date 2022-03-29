@@ -129,7 +129,7 @@ export default function Chats({ route }) {
           userId={item.userId}
           name={item.displayName}
           badge={item.newMessagesCount}
-          imgUri="https://reactnative.dev/img/tiny_logo.png"
+          imgUri={item.propic}
           time={item.lastMessage?.time}
           {...(item.lastMessage?.tipo === 1 && ({ message: '📷 Immagine' }))}
           {...(item.lastMessage?.tipo === 2 && ({ message: item.lastMessage.content }))}
